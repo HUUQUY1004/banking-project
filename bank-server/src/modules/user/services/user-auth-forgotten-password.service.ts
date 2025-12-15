@@ -3,19 +3,20 @@ import {
   UserAuthForgottenPasswordEntity,
   UserEntity,
 } from 'modules/user/entities';
-import { UserAuthForgottenPasswordRepository } from '../repositories';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
-import { UpdateResult } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Order } from 'common/constants';
 import { ForgottenPasswordCreateDto } from '../dtos';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserAuthForgottenPasswordService {
   private readonly _logger = new Logger(UserAuthForgottenPasswordService.name);
 
   constructor(
-    private readonly _userAuthForgottenPasswordRepository: UserAuthForgottenPasswordRepository,
+    @InjectRepository(UserAuthForgottenPasswordEntity)
+    private readonly _userAuthForgottenPasswordRepository: Repository<UserAuthForgottenPasswordEntity>,
     private readonly _mailerService: MailerService,
     private readonly _configService: ConfigService,
   ) {}

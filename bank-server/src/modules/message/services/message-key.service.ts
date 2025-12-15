@@ -1,13 +1,16 @@
-import { MessageKeyRepository } from '../repositories';
 import { Injectable } from '@nestjs/common';
-import { InsertResult } from 'typeorm';
+import { InsertResult, Repository } from 'typeorm';
 import { MessageKeyEntity } from '../entities';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class MessageKeyService {
   private readonly _messageKeys = [{ name: 'WELCOME_MESSAGE' }];
 
-  constructor(private readonly _messageKeyRepository: MessageKeyRepository) {}
+  constructor(
+    @InjectRepository(MessageKeyEntity)
+    private readonly _messageKeyRepository: Repository<MessageKeyEntity>,
+  ) {}
 
   public async getMessageKey(
     options: Partial<{

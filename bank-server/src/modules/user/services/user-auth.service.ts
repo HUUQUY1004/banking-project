@@ -5,18 +5,20 @@ import {
   PinCodeGenerationIncorrectException,
 } from 'exceptions';
 import { UserAuthEntity, UserEntity } from 'modules/user/entities';
-import { UserAuthRepository, UserRepository } from 'modules/user/repositories';
 import { UserService } from 'modules/user/services';
 import { UtilsService } from 'utils/services';
-import { UpdateResult } from 'typeorm';
-import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { In, Repository, UpdateResult } from 'typeorm';
 import { UserConfigService } from './user-config.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
 export class UserAuthService {
   constructor(
-    private readonly _userAuthRepository: UserAuthRepository,
-    private readonly _userRepostiory: UserRepository,
+    @InjectRepository(UserAuthEntity)
+    private readonly _userAuthRepository: Repository<UserAuthEntity>,
+    @InjectRepository(UserEntity)
+    private readonly _userRepostiory: Repository<UserEntity>,
     @Inject(forwardRef(() => UserService))
     private readonly _userService: UserService,
     private readonly _userConfigService: UserConfigService,

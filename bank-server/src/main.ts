@@ -1,31 +1,31 @@
 import { Reflector, NestFactory } from '@nestjs/core';
 import * as compression from 'compression';
 import { AppModule } from 'modules/app';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import { HttpExceptionFilter, QueryFailedFilter } from 'filters';
-import * as RateLimit from 'express-rate-limit';
+import  RateLimit from 'express-rate-limit';
 import * as morgan from 'morgan';
 import { setupSwagger } from 'utils';
-import {
-  initializeTransactionalContext,
-  patchTypeORMRepositoryWithBaseRepository,
-} from 'typeorm-transactional-cls-hooked';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import {
   ExpressAdapter,
   NestExpressApplication,
 } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
+import { addTransactionalDataSource, initializeTransactionalContext,   } from 'typeorm-transactional';
+import { DataSource } from 'typeorm';
 
 async function bootstrap(): Promise<void> {
   initializeTransactionalContext();
-  patchTypeORMRepositoryWithBaseRepository();
-
+  // patchTypeORMRepositoryWithBaseRepository();
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
     new ExpressAdapter(),
     { cors: true },
   );
+   const dataSource = app.get(DataSource);
+  addTransactionalDataSource(dataSource);
+
 
   app.enable('trust proxy');
   app.use(helmet());

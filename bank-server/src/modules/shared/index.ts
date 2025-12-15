@@ -1,7 +1,8 @@
-import { Global, HttpModule, Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { GeneratorService, ValidatorService } from 'utils/services';
 import { ConfigService } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 
 const providers = [ValidatorService, GeneratorService];
 

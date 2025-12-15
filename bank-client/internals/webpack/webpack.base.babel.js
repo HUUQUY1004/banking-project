@@ -21,9 +21,17 @@ module.exports = (options) => ({
     rules: [
       {
         test: /\.jsx?$/, // Transform all .js and .jsx files required somewhere with Babel
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!(react-draggable|react-grid-layout))/,
         use: {
           loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+
+            plugins: [
+              '@babel/plugin-proposal-optional-chaining',
+              '@babel/plugin-proposal-nullish-coalescing-operator',
+            ],
+          },
         },
       },
       {

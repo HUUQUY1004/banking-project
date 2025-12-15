@@ -40,7 +40,7 @@ import { UserSubscriber } from 'modules/user/subscribers/user.subscriber';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
-        port: +configService.get<number>('DB_PORT'),
+        port: +configService.get('DB_PORT'),
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
@@ -55,6 +55,9 @@ import { UserSubscriber } from 'modules/user/subscribers/user.subscriber';
         ],
         migrationsRun: true,
         logging: true,
+        autoLoadEntities: true,
+        retryAttempts: 10,
+        retryDelay: 3000,
       }),
       inject: [ConfigService],
     }),
@@ -63,7 +66,7 @@ import { UserSubscriber } from 'modules/user/subscribers/user.subscriber';
         transport: {
           host: configService.get('EMAIL_HOST'),
           port: +configService.get('EMAIL_PORT'),
-          secure: true,
+          secure: false,
           auth: {
             user: configService.get('EMAIL_ADDRESS'),
             pass: configService.get('EMAIL_PASSWORD'),
@@ -73,7 +76,7 @@ import { UserSubscriber } from 'modules/user/subscribers/user.subscriber';
           },
         },
         defaults: {
-          from: '"Bank Application" <payment@bank.pietrzakadrian.com>',
+          from: 'Bank Application',
         },
         template: {
           dir: process.cwd() + 'src/modules/transaction/templates/',

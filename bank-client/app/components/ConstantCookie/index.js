@@ -36,7 +36,7 @@ export default function ConstantCookie() {
           </p>
           <StyledConstantCookieActions>
             <Button>
-              <a href="https://github.com/pietrzakadrian">
+              <a href="">
                 <FormattedMessage {...messages.decline} />
               </a>
             </Button>

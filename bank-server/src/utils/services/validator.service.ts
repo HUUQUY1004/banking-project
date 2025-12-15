@@ -20,7 +20,7 @@ export class ValidatorService {
     senderAmountMoney: string | number,
     transactionAmountMoney: string | number,
   ): boolean {
-    if (transactionAmountMoney <= 0) {
+    if (+transactionAmountMoney <= 0) {
       throw new AmountMoneyNotEnoughException();
     }
 
@@ -50,15 +50,23 @@ export class ValidatorService {
     return true;
   }
 
-  public isHigherRole(role: RoleType): boolean {
-    if (
-      Object.values(RoleType)
-        .filter((item) => item !== RoleType.USER)
-        .includes(role)
-    ) {
-      return true;
-    }
+  // public isHigherRole(role: RoleType): boolean {
+  //   if (
+  //     Object.values(RoleType)
+  //       .filter((item) => item !== RoleType.USER)
+  //       .includes(role)
+  //   ) {
+  //     return true;
+  //   }
 
-    return false;
-  }
+  //   return false;
+  // }
+  public isHigherRole(role: RoleType): boolean {
+  const higherRoles = (Object.values(RoleType).filter(
+    (item) => item !== RoleType.USER
+  ) as RoleType[]);
+
+  return higherRoles.includes(role);
+}
+
 }

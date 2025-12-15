@@ -1,0 +1,15 @@
+/bank-server/.env
+/bank-server/.env.development
+/bank-server/.env.production
+/bank-server/.env.test
+/bank-server/node_modules
+/bank-server/dist
+/bank-server/.turbo
+/bank-server/.idea
+/bank-server/.vscode
+/bank-server/npm-debug.log
+/bank-server/yarn-error.log
+/bank-client/.env
+/bank-client/.env.development
+/bank-client/.env.production
+/bank-client/.env.test
